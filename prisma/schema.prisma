@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Book {
+  id           String   @id @default(cuid())
+  isbn         String   @unique
+  title        String?
+  imageUrl     String?
+  description  String?
+  authors      String   @default("[]") // Store as JSON string
+  publishedDate String?
+  pageCount    Int?
+  categories   String   @default("[]") // Store as JSON string
+  source       String?  // Which API provided the data (google, openlibrary, isbndb)
+  sellPrice    Float?   // Price from sell4more.de
+  highestPrice Float?   // Highest price from sell4more.de
+  lastPriceCheck DateTime? // When the price was last checked
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+} 
